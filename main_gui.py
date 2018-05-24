@@ -6,21 +6,21 @@ from OpenGL import GL as gl
 from OpenGL import GLU as glu
 # from OpenGL import GLUT
 
-UI_FILE = "mainwindow.ui"
+from autoMainWindow import Ui_MainWindow
 
 class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self, *args):
         super(MainWindow, self).__init__(*args)
-        uic.loadUi(UI_FILE, self)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
-    def setupUI(self):
-        self.openGLWidget.initializeGL()
-        self.openGLWidget.resizeGL(651, 551)
-        self.openGLWidget.paintGL = self.paintGL
-        timer = QtCore.QTimer(self)
-        timer.timeout.connect(self.openGLWidget.update)
-        timer.start(1000)
+        self.ui.openGLWidget.initializeGL()
+        self.ui.openGLWidget.resizeGL(651, 551)
+        self.ui.openGLWidget.paintGL = self.paintGL
+
+        # Connect buttons
+        self.ui.button_apply.clicked.connect(lambda x: print("mm"))
 
     def paintGL(self):
         gl.glClear(gl.GL_COLOR_BUFFER_BIT)
@@ -38,7 +38,6 @@ class MainWindow(QtWidgets.QMainWindow):
 def main():
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
-    window.setupUI()
     window.show()
     sys.exit(app.exec_())
 
