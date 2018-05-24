@@ -20,3 +20,6 @@ class VisualizationWidget(QtWidgets.openGLWidget):
 	def change_projection(self, projection_type):
 		# set projection to projection_type
 		pass
+	
+	def create_cube(self, edge):
+		pass
