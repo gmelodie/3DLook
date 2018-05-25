@@ -79,7 +79,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QLabel" name="choose_translate_z">
+          <widget class="QLabel" name="doubleSpinBox_4">
            <property name="text">
             <string>Z</string>
            </property>
@@ -89,7 +89,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
+          <widget class="QDoubleSpinBox" name="choose_translate_z"/>
          </item>
         </layout>
        </item>
@@ -215,7 +215,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_14">
          <item>
-          <widget class="QLabel" name="choose_scale_z">
+          <widget class="QLabel" name="label_14">
            <property name="text">
             <string>dZ</string>
            </property>
@@ -225,7 +225,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_10"/>
+          <widget class="QDoubleSpinBox" name="choose_scale_z"/>
          </item>
         </layout>
        </item>

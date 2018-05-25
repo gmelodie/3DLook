@@ -16,7 +16,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         pass
 
     def translate(self, inc_x, inc_y, inc_z):
-        pass
+        print(inc_x, inc_y, inc_z)
 
     def mirror(self, plane_xy, plane_yz, plane_zx):
         pass

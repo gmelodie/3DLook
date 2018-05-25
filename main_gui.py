@@ -13,23 +13,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.widget = visulization.VisualizationWidget()
-        
         self.ui.father_layout.addWidget(self.widget)
-
-        #self.ui.openGLWidget.initializeGL()
-        #self.ui.openGLWidget.paintGL = self.paintGL
 
         # Connect buttons
         self.ui.button_apply.clicked.connect(self.handle_apply)
-        #self.ui.openGLWidget = visulization.VisualizationWidget()
 
     def handle_apply(self):
         translate_nums = [self.ui.choose_translate_x, self.ui.choose_translate_y,
                           self.ui.choose_translate_z]
+        self.widget.translate(*[float(x.text()) for x in translate_nums])
         
-        translate = [int(x.text()) for x in translate_nums]
-        pass
-
 def main():
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
