@@ -2,11 +2,9 @@ import sys
 
 from PyQt5 import QtWidgets, QtCore, uic
 
-from OpenGL import GL as gl
-from OpenGL import GLU as glu
-# from OpenGL import GLUT
 
 from autoMainWindow import Ui_MainWindow
+import visulization
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -14,26 +12,23 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__(*args)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.widget = visulization.VisualizationWidget()
+        
+        self.ui.father_layout.addWidget(self.widget)
 
-        self.ui.openGLWidget.initializeGL()
-        self.ui.openGLWidget.resizeGL(651, 551)
-        self.ui.openGLWidget.paintGL = self.paintGL
+        #self.ui.openGLWidget.initializeGL()
+        #self.ui.openGLWidget.paintGL = self.paintGL
 
         # Connect buttons
-        self.ui.button_apply.clicked.connect(lambda x: print("mm"))
+        self.ui.button_apply.clicked.connect(self.handle_apply)
+        #self.ui.openGLWidget = visulization.VisualizationWidget()
 
-    def paintGL(self):
-        gl.glClear(gl.GL_COLOR_BUFFER_BIT)
-        gl.glColor3f(1, 0, 0)
-        gl.glBegin(gl.GL_TRIANGLES)
-        gl.glVertex3f(-0.5, -0.5, 0)
-        gl.glVertex3f(0.5, -0.5, 0)
-        gl.glVertex3f(0.0, 0.5, 0)
-        gl.glEnd()
-
-        glu.gluPerspective(45, 651/551, 0.1, 50.0)
-        gl.glTranslatef(0.0, 0.0, -5)
-
+    def handle_apply(self):
+        translate_nums = [self.ui.choose_translate_x, self.ui.choose_translate_y,
+                          self.ui.choose_translate_z]
+        
+        translate = [int(x.text()) for x in translate_nums]
+        pass
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
