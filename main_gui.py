@@ -16,23 +16,36 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Connect buttons
         self.ui.button_apply.clicked.connect(self.handle_apply)
+        """
+        self.ui.combo_box_choose_perspective.currentTextChanged.connect(
+             self.handle_choose_perspective)
+        """
 
-    def handle_change_persepctive(self):
-        pass
+    def handle_choose_perspective(self):
+        self.widget.change_projection(str(self.ui.choose_projection.currentText()))
+
 
     def handle_apply(self):
         translate_nums = [self.ui.choose_translate_x, self.ui.choose_translate_y,
                           self.ui.choose_translate_z]
-        self.widget.translate(*[float(var.text()) for var in translate_nums])
+        self.widget.translate(*[convert_combo_str_to_float(var.text()) for var in translate_nums])
 
         scale_nums = [self.ui.choose_scale_x, self.ui.choose_scale_y,
                       self.ui.choose_scale_z]
-        self.widget.scale(*[float(var.text()) for var in scale_nums])
+        self.widget.scale(*[convert_combo_str_to_float(var.text()) for var in scale_nums])
 
         rotate_nums = [self.ui.choose_rotate_x, self.ui.choose_rotate_y,
                        self.ui.choose_rotate_z]
-        self.widget.rotate(*[float(var.text()) for var in rotate_nums])
+        self.widget.rotate(*[convert_combo_str_to_float(var.text()) for var in rotate_nums])
 
+        """
+        planes = [self.ui.choose_plane_xy, self.ui.choose_plane_yz,
+                  self.ui.choose_plane_zx]
+        self.widget.mirror(*[var.isChecked() for var in planes])
+
+        """
+def convert_combo_str_to_float(num):
+    return float(num.replace(",", "."))
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
