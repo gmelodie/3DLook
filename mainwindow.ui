@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>245</width>
+      <width>343</width>
       <height>641</height>
      </rect>
     </property>
@@ -55,7 +55,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="choose_translate_x"/>
+          <widget class="QDoubleSpinBox" name="choose_translate_x">
+           <property name="minimum">
+            <double>-999999.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>999999.000000000000000</double>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -72,7 +79,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="choose_translate_y"/>
+          <widget class="QDoubleSpinBox" name="choose_translate_y">
+           <property name="minimum">
+            <double>-999999.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>999999.000000000000000</double>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -89,7 +103,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="choose_translate_z"/>
+          <widget class="QDoubleSpinBox" name="choose_translate_z">
+           <property name="minimum">
+            <double>-999999.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>999999.000000000000000</double>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -123,7 +144,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="choose_rotate_x"/>
+          <widget class="QDoubleSpinBox" name="choose_rotate_x">
+           <property name="minimum">
+            <double>-180.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>180.000000000000000</double>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -140,7 +168,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="choose_rotate_y"/>
+          <widget class="QDoubleSpinBox" name="choose_rotate_y">
+           <property name="minimum">
+            <double>-180.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>180.000000000000000</double>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -157,7 +192,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="choose_rotate_z"/>
+          <widget class="QDoubleSpinBox" name="choose_rotate_z">
+           <property name="minimum">
+            <double>-180.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>180.000000000000000</double>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -249,7 +291,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_11">
          <item>
-          <widget class="QCheckBox" name="checkBox_2">
+          <widget class="QCheckBox" name="choose_plane_xy">
            <property name="accessibleName">
             <string/>
            </property>
@@ -269,7 +311,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_12">
          <item>
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="choose_plane_yz">
            <property name="text">
             <string> y-z</string>
            </property>
@@ -280,9 +322,9 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_13">
          <item>
-          <widget class="QCheckBox" name="checkBox_3">
+          <widget class="QCheckBox" name="choose_plane_zx">
            <property name="text">
-            <string> y-z</string>
+            <string> z-x</string>
            </property>
           </widget>
          </item>
@@ -295,8 +337,8 @@
    <widget class="QComboBox" name="choose_projection">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>770</y>
+      <x>210</x>
+      <y>690</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -337,10 +379,10 @@
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>360</x>
       <y>20</y>
       <width>841</width>
-      <height>781</height>
+      <height>721</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="father_layout"/>
@@ -352,7 +394,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

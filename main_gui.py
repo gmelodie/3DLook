@@ -16,12 +16,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Connect buttons
         self.ui.button_apply.clicked.connect(self.handle_apply)
-        """
-        self.ui.combo_box_choose_perspective.currentTextChanged.connect(
-             self.handle_choose_perspective)
-        """
+        self.ui.choose_projection.currentTextChanged.connect(
+            self.handle_choose_projection)
 
-    def handle_choose_perspective(self):
+    def handle_choose_projection(self):
         self.widget.change_projection(str(self.ui.choose_projection.currentText()))
 
 
@@ -38,12 +36,10 @@ class MainWindow(QtWidgets.QMainWindow):
                        self.ui.choose_rotate_z]
         self.widget.rotate(*[convert_combo_str_to_float(var.text()) for var in rotate_nums])
 
-        """
         planes = [self.ui.choose_plane_xy, self.ui.choose_plane_yz,
                   self.ui.choose_plane_zx]
         self.widget.mirror(*[var.isChecked() for var in planes])
 
-        """
 def convert_combo_str_to_float(num):
     return float(num.replace(",", "."))
 
