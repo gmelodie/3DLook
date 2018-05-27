@@ -12,7 +12,7 @@ from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
 # Variaveis globais para transformações de rotação.
-curAngle = 0
+curAngle = 45
 increment = 1
 
 # Variáveis auxiliares
@@ -62,13 +62,9 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         # Draw solid cube
         
     def init(self) :
-        # Agora temos que cuidar também o buffer de profundidade.
-        # Trocamos para utilizar dois buffers, deve-se trocar o glFlush() no método display() para glutSwapBuffers()
-        # Define as dimensoes da janela.
-        # Define posicao inicial da janela na tela
         # Pedimos para o OpenGL verificar o buffer de profundidade na hora de renderizar. Precisa ser depois de criada a janela!
         glEnable(GL_DEPTH_TEST) 
-        glClearColor(0, 0, 1, 0)
+        glClearColor(0, 0, 0, 0)
         glutInit()
 
 
@@ -96,8 +92,16 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
 
     def drawObject(self):
         print("drawing wire cube, there should only be 1 print")
+        glPushMatrix(); 
+        glColor3f(1.0, 1.0, 1.0);
+        #glTranslatef( 0.0, 0.0, 6.0);
+        glutWireCube(1);
+        glPopMatrix();
+
+        """
         glColor3f(1,1,0)
-        glutWireCube(1)
+        glutWireCube(3)
+        """
 
     def display(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -105,6 +109,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         # Define a matriz de projeção ortogonal
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
+        #gluPerspective(60.0, 1, 1.0, 30.0)
         glOrtho(-2, 2, -2, 2, -2, 100)
         
 
@@ -116,5 +121,6 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         # Para cada porta de visão, configura as propriedades do material e desenha o objeto
         glViewport(0,0,400,400)
         glLoadIdentity()
+        glRotatef(curAngle, 1, 1, 1)
         self.drawObject()
 
