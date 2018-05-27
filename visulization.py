@@ -41,7 +41,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         self.scale_z = 1
 
         self.reps = 0
-        self.continuos = False
+        self.continuos = True
 
     def rotate(self, theta_x, theta_y, theta_z):
         if not self.continuos:
@@ -52,11 +52,11 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         else:
             self.timer = QtCore.QTimer()
             self.timer.timeout.connect(
-                lambda: self.fun(theta_x, theta_y, theta_z))
+                lambda: self.rotate_fun(theta_x, theta_y, theta_z))
             self.reps = 0
             self.timer.start(10)
 
-    def fun(self, theta_x, theta_y, theta_z):
+    def rotate_fun(self, theta_x, theta_y, theta_z):
         self.angle_x += (theta_x) / repetitions
         self.angle_y += (theta_y) / repetitions
         self.angle_z += (theta_z) / repetitions
@@ -68,10 +68,30 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
 
 
     def translate(self, inc_x, inc_y, inc_z):
-        self.translate_x += inc_x
-        self.translate_y += inc_y
-        self.translate_z += inc_z
-        self.update()
+        if not self.continuos:
+            self.translate_x += inc_x
+            self.translate_y += inc_y
+            self.translate_z += inc_z
+            self.update()
+
+        else:
+            self.timer = QtCore.QTimer()
+            self.timer.timeout.connect(
+                lambda: self.translate_fun(inc_x, inc_y, inc_z))
+            self.reps = 0
+            self.timer.start(10)
+
+
+    def translate_fun(self, inc_x, inc_y, inc_z):
+        self.translate_x += (inc_x) / repetitions
+        self.translate_y += (inc_y) / repetitions
+        self.translate_z += (inc_z) / repetitions
+        self.reps += 1
+        if self.reps >= repetitions:
+            self.timer.stop()
+        else:
+            self.update()
+
 
     def mirror(self, plane_xy, plane_yz, plane_zx):
         pass
@@ -85,11 +105,13 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
             self.scale_z *= dz
 
     def change_projection(self, projection_type):
-        # set projection to projection_type
-        pass
-
-    def create_cube(self, edge):
-        pass
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        if (projection_type == 'Perspectiva'):
+            gluPerspective(45, 2, -2, 100)
+        else:
+            glOrtho(-2, 2, -2, 2, -2, 100)
+        self.update()
 
     def paintGL(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -111,7 +133,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         # Translate
         glTranslate(self.translate_x, self.translate_y, self.translate_z)
 
-        glutWireCube(2)
+        glutWireCube(1)
         glPopMatrix()
 
 
@@ -143,21 +165,26 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         # Define a matriz de projeção ortogonal
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
-        glOrtho(-2, 2, -2, 2, -2, 100)
+        gluPerspective(0, 1, -2, 100)
+        #glOrtho(-2, 2, -2, 2, -2, 100)
 
         # Define que irá trabalhar com a matriz de modelo/visão
         glMatrixMode(GL_MODELVIEW)
 
-        # Para cada porta de visão, configura as propriedades do material e desenha o objeto
+        # Para cada porta de visão, configura as propriedades do
+        # material e desenha o objeto
         glViewport(0, 0, 400, 400)
         glLoadIdentity()
 
     def init(self):
         self.makeCurrent()
         # Agora temos que cuidar também o buffer de profundidade.
-        # Trocamos para utilizar dois buffers, deve-se trocar o glFlush() no método display() para glutSwapBuffers()
+        # Trocamos para utilizar dois buffers, deve-se
+        # trocar o glFlush() no método display() para glutSwapBuffers()
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
-        # Pedimos para o OpenGL verificar o buffer de profundidade na hora de renderizar. Precisa ser depois de criada a janela!
+        # Pedimos para o OpenGL verificar o buffer de
+        # profundidade na hora de renderizar. Precisa ser depois
+        # de criada a janela!
         glEnable(GL_DEPTH_TEST)
 
         glClearColor(0, 0, 1, 0)
