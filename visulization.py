@@ -12,8 +12,8 @@ from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
 # Variaveis globais para transformações de rotação.
-curAngle = 45
 increment = 1
+curAngle = 45
 
 # Variáveis auxiliares
 toggleAnimation = True
@@ -27,15 +27,13 @@ lightTypes = [["Diffuse reflection only","No ambient or specular"],
 
 
 class VisualizationWidget(QtWidgets.QOpenGLWidget):
-
     def __init__(self, *args):
         super(VisualizationWidget, self).__init__(*args)
-        self.element_array = None
-        self.vertex_array = None
-        self.initializeGL()
+        glutInit()
 
     def rotate(self, theta_x, theta_y, theta_z):
-        pass
+        global curAngle
+        curAngle += 15
 
     def translate(self, inc_x, inc_y, inc_z):
         print(inc_x, inc_y, inc_z)
@@ -53,55 +51,43 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
     def create_cube(self, edge):
         pass
 
-    # Test fucntion for now
-    def paintGL(self):
-        self.init()
-        self.initLighting()
-        self.display()
+    def initializeGL(self):
+        glClearDepth(1.0)              
+        glDepthFunc(GL_LESS)
+        glEnable(GL_DEPTH_TEST)
+        glShadeModel(GL_SMOOTH)
 
-        # Draw solid cube
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()                    
         
-    def init(self) :
-        # Pedimos para o OpenGL verificar o buffer de profundidade na hora de renderizar. Precisa ser depois de criada a janela!
+        glOrtho(-2, 2, -2, 2, -2, 100)
+
+        # TODO: choose correct values
+        #gluPerspective(45.0,1.33,0.1, 100.0) 
+        glMatrixMode(GL_MODELVIEW)
+
+    def init(self):
+        glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH) 
+
+        # Define as dimensoes da janela.
+        # Define posicao inicial da janela na tela
         glEnable(GL_DEPTH_TEST) 
-        glClearColor(0, 0, 0, 0)
-        glutInit()
+
+        glClearColor(0, 0, 1, 0)
+        gluLookAt(0, 0, 2, 0, 0, 0, 0, 1, 0)
+        glutDisplayFunc(self.display)
 
 
-    # Inicializa a luz
-    def initLighting(self) :
-        # Informa que irá utilizar iluminação    
-        glEnable(GL_LIGHTING)
-        # Liga a luz0
-        glEnable(GL_LIGHT0)
-        # Informa que irá utilizar as cores do material
-        glEnable(GL_COLOR_MATERIAL)
+    def paintGL(self):
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        glLoadIdentity()
+        glMatrixMode(GL_MODELVIEW)
 
-    # Define a posição da luz 0
-    def setLight(self) :
-        light_position = [10.0, 10.0, -20.0, 0.0]
-        glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
-    # Função para definir o tipo de tonalização
-    def setShading(self, sType) :
-        if sType == 0 :
-            glShadeModel(GL_SMOOTH)
-        elif sType == 1 :
-            glShadeModel(GL_FLAT)
-
-
-    def drawObject(self):
-        print("drawing wire cube, there should only be 1 print")
-        glPushMatrix(); 
-        glColor3f(1.0, 1.0, 1.0);
-        #glTranslatef( 0.0, 0.0, 6.0);
-        glutWireCube(1);
-        glPopMatrix();
-
-        """
-        glColor3f(1,1,0)
-        glutWireCube(3)
-        """
+        glPushMatrix()
+        glColor3f( 1.0, 1.5, 0.0 );
+        glRotatef(curAngle, 1, 1, 1)
+        glutWireCube(2)
+        glPopMatrix()
 
     def display(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -109,18 +95,11 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         # Define a matriz de projeção ortogonal
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
-        #gluPerspective(60.0, 1, 1.0, 30.0)
         glOrtho(-2, 2, -2, 2, -2, 100)
         
-
         # Define que irá trabalhar com a matriz de modelo/visão
         glMatrixMode(GL_MODELVIEW)
-        self.setLight()
-        self.setShading(curShading)
         
         # Para cada porta de visão, configura as propriedades do material e desenha o objeto
         glViewport(0,0,400,400)
         glLoadIdentity()
-        glRotatef(curAngle, 1, 1, 1)
-        self.drawObject()
-
