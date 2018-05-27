@@ -332,49 +332,47 @@
        </item>
       </layout>
      </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QPushButton" name="button_apply">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 75 oblique 14pt &quot;Cantarell&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Aplicar</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="choose_projection">
+         <property name="styleSheet">
+          <string notr="true">font: 75 oblique 14pt &quot;Cantarell&quot;;</string>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Perspectiva</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Ortogonal</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
-   </widget>
-   <widget class="QComboBox" name="choose_projection">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>690</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 75 oblique 14pt &quot;Cantarell&quot;;</string>
-    </property>
-    <property name="editable">
-     <bool>false</bool>
-    </property>
-    <item>
-     <property name="text">
-      <string>Perspectiva</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Ortogonal</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QPushButton" name="button_apply">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>680</y>
-      <width>121</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 75 oblique 14pt &quot;Cantarell&quot;;</string>
-    </property>
-    <property name="text">
-     <string>Aplicar</string>
-    </property>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
