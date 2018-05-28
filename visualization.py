@@ -60,17 +60,19 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
 
     def paintGL(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        glLoadIdentity()
         glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
 
         if self.projection_type == 'Perspectiva':
             glFrustum(-2.0, 2.0, -2.0, 2.0, 2.0, 100.0)
+            gluPerspective(45, 1, 1.7, 20) # TODO: Choose correct values
         elif self.projection_type == "Ortogonal":
             glOrtho(-2, 2, -2, 2, -2, 100)
         else:
             print("ERROR, not a valid projection")
 
         glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
 
         # The operations are done from bottom to top
         glPushMatrix()
@@ -103,10 +105,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         glClearColor(0, 0, 1, 0)
 
         self.change_projection('Perspectiva')
-        #glOrtho(-2, 2, -2, 2, -2, 100)
 
-        # TODO: choose correct values
-        #gluPerspective(45.0,1.33,0.1, 100.0)
         glMatrixMode(GL_MODELVIEW)
 
         # Define posicao inicial da janela na tela
@@ -118,11 +117,9 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Define a matriz de projeção perspective
-        self.change_projection('Perspectiva')
-        #glMatrixMode(GL_PROJECTION)
-        #glLoadIdentity()
-        #gluPerspective(0, 1, -2, 100)
-        #glOrtho(-2, 2, -2, 2, -2, 100)
+        #self.change_projection('Perspectiva')
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
 
         # Define que irá trabalhar com a matriz de modelo/visão
         glMatrixMode(GL_MODELVIEW)
