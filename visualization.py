@@ -64,7 +64,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         glMatrixMode(GL_MODELVIEW)
 
         if self.projection_type == 'Perspectiva':
-            gluPerspective(0.00001, 2, -2, 100)
+            gluPerspective(0, 1, -2, 100)
         elif self.projection_type == "Ortogonal":
             glOrtho(-2, 2, -2, 2, -2, 100)
         else:
