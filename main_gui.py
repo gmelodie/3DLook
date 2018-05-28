@@ -39,10 +39,16 @@ class MainWindow(QtWidgets.QMainWindow):
         # Read input from user
         translate_nums = [self.ui.choose_translate_x, self.ui.choose_translate_y,
                           self.ui.choose_translate_z]
+        translate_nums = [convert_combo_str_to_float(var.text()) for var in translate_nums]
+
         scale_nums = [self.ui.choose_scale_x, self.ui.choose_scale_y,
                       self.ui.choose_scale_z]
+        scale_nums = [convert_combo_str_to_float(var.text()) for var in scale_nums]
+
         rotate_nums = [self.ui.choose_rotate_x, self.ui.choose_rotate_y,
                        self.ui.choose_rotate_z]
+        rotate_nums = [convert_combo_str_to_float(var.text()) for var in rotate_nums]
+
         planes = [self.ui.choose_plane_xy, self.ui.choose_plane_yz,
                   self.ui.choose_plane_zx]
 
@@ -58,18 +64,24 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # First perform continously translate
         if self.reps < REPETITIONS:
-            self.widget.translate(*[convert_combo_str_to_float(var.text()) / REPETITIONS
-                                    for var in translate_nums])
+            # If all translates are equal to zero
+            if not any(translate_nums):
+                self.reps = REPETITIONS
+                return
+            self.widget.translate(*[var / REPETITIONS for var in translate_nums])
 
         # Then perform continously rotate
         elif REPETITIONS <= self.reps <= 2*REPETITIONS:
-            self.widget.rotate(*[convert_combo_str_to_float(var.text()) / REPETITIONS
-                                 for var in rotate_nums])
+            # If all rotate are equal to zero
+            if not any(rotate_nums):
+                self.reps = 2*REPETITIONS
+                return
+            self.widget.rotate(*[var / REPETITIONS for var in rotate_nums])
 
         # If done, stop timer and do non-continuos updates
         else:
             self.timer.stop()
-            self.widget.scale(*[convert_combo_str_to_float(var.text()) for var in scale_nums])
+            self.widget.scale(*[var for var in scale_nums])
             self.widget.mirror(*[var.isChecked() for var in planes])
             self.updating = False
             self.reps = 0
