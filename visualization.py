@@ -50,6 +50,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
             self.scale_x *= -1
         if (plane_zx):
             self.scale_y *= -1
+        self.update()
 
     def scale(self, dx, dy, dz):
         if dx != 0:
@@ -58,6 +59,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
             self.scale_y *= dy
         if dz != 0:
             self.scale_z *= dz
+        self.update()
 
     def change_projection(self, projection_type):
         self.projection_type = projection_type
