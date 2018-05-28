@@ -44,7 +44,12 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         self.update()
 
     def mirror(self, plane_xy, plane_yz, plane_zx):
-        pass
+        if (plane_xy):
+            self.scale_z *= -1
+        if (plane_yz):
+            self.scale_x *= -1
+        if (plane_zx):
+            self.scale_y *= -1
 
     def scale(self, dx, dy, dz):
         if dx != 0:
