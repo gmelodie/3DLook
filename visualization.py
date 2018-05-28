@@ -64,7 +64,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         glMatrixMode(GL_MODELVIEW)
 
         if self.projection_type == 'Perspectiva':
-            gluPerspective(45, 2, -2, 100)
+            gluPerspective(0.00001, 2, -2, 100)
         elif self.projection_type == "Ortogonal":
             glOrtho(-2, 2, -2, 2, -2, 100)
         else:
@@ -100,7 +100,8 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
 
         glClearColor(0, 0, 1, 0)
 
-        glOrtho(-2, 2, -2, 2, -2, 100)
+        self.change_projection('Perspectiva')
+        #glOrtho(-2, 2, -2, 2, -2, 100)
 
         # TODO: choose correct values
         #gluPerspective(45.0,1.33,0.1, 100.0)
@@ -114,10 +115,11 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
     def display(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        # Define a matriz de projeção ortogonal
-        glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()
-        gluPerspective(0, 1, -2, 100)
+        # Define a matriz de projeção perspective
+        self.change_projection('Perspectiva')
+        #glMatrixMode(GL_PROJECTION)
+        #glLoadIdentity()
+        #gluPerspective(0, 1, -2, 100)
         #glOrtho(-2, 2, -2, 2, -2, 100)
 
         # Define que irá trabalhar com a matriz de modelo/visão
