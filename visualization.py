@@ -109,7 +109,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
 
-        glClearColor(0, 0, 1, 0)
+        glClearColor(0, 0, 0, 0)
 
         self.change_projection('Perspectiva')
 
