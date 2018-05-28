@@ -3,7 +3,7 @@ import sys
 from PyQt5 import QtWidgets, QtCore
 
 from autoMainWindow import Ui_MainWindow
-import visulization
+import visualization
 
 REPETITIONS = 100
 
@@ -15,7 +15,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Set up OpenGL
         self.ui.setupUi(self)
-        self.widget = visulization.VisualizationWidget()
+        self.widget = visualization.VisualizationWidget()
         self.ui.father_layout.addWidget(self.widget)
 
         # Helper variables
