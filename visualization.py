@@ -29,6 +29,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         self.scale_x = 1
         self.scale_y = 1
         self.scale_z = 1
+        self.projection_type = "Ortogonal"
 
     def rotate(self, theta_x, theta_y, theta_z):
         self.angle_x += theta_x
@@ -54,18 +55,20 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
             self.scale_z *= dz
 
     def change_projection(self, projection_type):
-        glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()
-        if projection_type == 'Perspectiva':
-            gluPerspective(45, 2, -2, 100)
-        else:
-            glOrtho(-2, 2, -2, 2, -2, 100)
+        self.projection_type = projection_type
         self.update()
 
     def paintGL(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
         glMatrixMode(GL_MODELVIEW)
+
+        if self.projection_type == 'Perspectiva':
+            gluPerspective(45, 2, -2, 100)
+        elif self.projection_type == "Ortogonal":
+            glOrtho(-2, 2, -2, 2, -2, 100)
+        else:
+            print("ERROR, this should be happenign")
 
         # The operations are done from bottom to top
         glPushMatrix()
