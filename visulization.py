@@ -1,25 +1,17 @@
+# TODO: Remove
 # pylint: disable=unused-wildcard-import
 # pylint: disable=wildcard-import
 # pylint: disable=invalid-name
 
 from PyQt5 import QtWidgets, QtCore
 
-#from OpenGL import GL as gl
-#from OpenGL import GLU as glu
-#from OpenGL import GLUT as glut
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
 
 
-# Variaveis globais para transformações de rotação.
-increment = 1
-curAngle = 45
 
-# Variáveis auxiliares
 toggleAnimation = True
-curObject = 0
-curShading = 0
 
 
 class VisualizationWidget(QtWidgets.QOpenGLWidget):
@@ -37,7 +29,6 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         self.scale_x = 1
         self.scale_y = 1
         self.scale_z = 1
-
 
     def rotate(self, theta_x, theta_y, theta_z):
         self.angle_x += theta_x
@@ -76,9 +67,10 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         glLoadIdentity()
         glMatrixMode(GL_MODELVIEW)
 
-        glPushMatrix() # The operations are done from bottom to top
-        # set color
-        glColor3f(1.0, 1.5, 0.0)
+        # The operations are done from bottom to top
+        glPushMatrix()
+
+        glColor3f(1.0, 1.5, 0.0) # set colour
 
         # Scale
         glScale(self.scale_x, self.scale_y, self.scale_z)
@@ -93,7 +85,6 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
 
         glutWireCube(1)
         glPopMatrix()
-
 
     def initializeGL(self):
         glClearDepth(1.0)
@@ -135,14 +126,15 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         glLoadIdentity()
 
     def init(self):
+        # Function for correct integration with PyQt5
         self.makeCurrent()
+
         # Agora temos que cuidar também o buffer de profundidade.
         # Trocamos para utilizar dois buffers, deve-se
         # trocar o glFlush() no método display() para glutSwapBuffers()
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
-        # Pedimos para o OpenGL verificar o buffer de
-        # profundidade na hora de renderizar. Precisa ser depois
-        # de criada a janela!
+
+        # Check depth buffer
         glEnable(GL_DEPTH_TEST)
 
         glClearColor(0, 0, 1, 0)

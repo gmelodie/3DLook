@@ -12,9 +12,13 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args):
         super(MainWindow, self).__init__(*args)
         self.ui = Ui_MainWindow()
+
+        # Set up OpenGL
         self.ui.setupUi(self)
         self.widget = visulization.VisualizationWidget()
         self.ui.father_layout.addWidget(self.widget)
+
+        # Helper variables
         self.timer = None
         self.updating = False
         self.reps = 0
@@ -32,16 +36,17 @@ class MainWindow(QtWidgets.QMainWindow):
             self.warning("Atualização já em progresso!")
             return
 
+        # Read input from user
         translate_nums = [self.ui.choose_translate_x, self.ui.choose_translate_y,
                           self.ui.choose_translate_z]
         scale_nums = [self.ui.choose_scale_x, self.ui.choose_scale_y,
                       self.ui.choose_scale_z]
         rotate_nums = [self.ui.choose_rotate_x, self.ui.choose_rotate_y,
                        self.ui.choose_rotate_z]
-
         planes = [self.ui.choose_plane_xy, self.ui.choose_plane_yz,
                   self.ui.choose_plane_zx]
 
+        # Create timers and set mode to updating
         self.updating = True
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(
@@ -50,12 +55,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def continuos_updates(self, translate_nums, scale_nums, rotate_nums, planes):
         self.reps += 1
+
+        # If done, stop timer and do non-continuos updates
         if self.reps >= REPETITIONS:
             self.timer.stop()
             self.widget.scale(*[convert_combo_str_to_float(var.text()) for var in scale_nums])
             self.widget.mirror(*[var.isChecked() for var in planes])
             self.updating = False
             self.reps = 0
+
+        # Continous updates
         else:
             self.widget.translate(*[convert_combo_str_to_float(var.text()) / REPETITIONS
                                     for var in translate_nums])
@@ -75,8 +84,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if box.clickedButton() == button_yes:  # Yes pressed
             box.close()
 
-
-    # Overloading classes
+    # Overloading close window function
     def closeEvent(self, event):
         # Verifies if the user wants to exit the window
         box = QtWidgets.QMessageBox()
