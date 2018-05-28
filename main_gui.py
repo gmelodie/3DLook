@@ -29,7 +29,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def handle_apply(self):
         if self.updating:
-            print("Update in progress, canceling apply")
+            self.warning("Atualização já em progresso!")
             return
 
         translate_nums = [self.ui.choose_translate_x, self.ui.choose_translate_y,
@@ -61,6 +61,20 @@ class MainWindow(QtWidgets.QMainWindow):
                                     for var in translate_nums])
             self.widget.rotate(*[convert_combo_str_to_float(var.text()) / REPETITIONS
                                  for var in rotate_nums])
+
+    def warning(self, message):
+        box = QtWidgets.QMessageBox()
+        box.setIcon(QtWidgets.QMessageBox.Question)
+        box.setWindowTitle('Atenção!')
+        box.setText(message)
+        box.setStandardButtons(QtWidgets.QMessageBox.Yes)
+        button_yes = box.button(QtWidgets.QMessageBox.Yes)
+        button_yes.setText('Ok')
+        box.exec_()
+
+        if box.clickedButton() == button_yes:  # Yes pressed
+            box.close()
+
 
     # Overloading classes
     def closeEvent(self, event):
