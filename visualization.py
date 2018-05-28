@@ -61,14 +61,16 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
     def paintGL(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
-        glMatrixMode(GL_MODELVIEW)
+        glMatrixMode(GL_PROJECTION)
 
         if self.projection_type == 'Perspectiva':
-            gluPerspective(0, 1, -2, 100)
+            glFrustum(-2.0, 2.0, -2.0, 2.0, 2.0, 100.0)
         elif self.projection_type == "Ortogonal":
             glOrtho(-2, 2, -2, 2, -2, 100)
         else:
             print("ERROR, not a valid projection")
+
+        glMatrixMode(GL_MODELVIEW)
 
         # The operations are done from bottom to top
         glPushMatrix()
