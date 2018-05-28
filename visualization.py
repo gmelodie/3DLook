@@ -68,7 +68,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         elif self.projection_type == "Ortogonal":
             glOrtho(-2, 2, -2, 2, -2, 100)
         else:
-            print("ERROR, this should be happenign")
+            print("ERROR, not a valid projection")
 
         # The operations are done from bottom to top
         glPushMatrix()

@@ -33,7 +33,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def handle_apply(self):
         if self.updating:
-            self.warning("Atualização já em progresso!")
+            self.warning("Atualizacao ja em progresso!")
             return
 
         # Read input from user
