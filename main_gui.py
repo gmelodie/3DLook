@@ -56,20 +56,23 @@ class MainWindow(QtWidgets.QMainWindow):
     def continuos_updates(self, translate_nums, scale_nums, rotate_nums, planes):
         self.reps += 1
 
+        # First perform continously translate
+        if self.reps < REPETITIONS:
+            self.widget.translate(*[convert_combo_str_to_float(var.text()) / REPETITIONS
+                                    for var in translate_nums])
+
+        # Then perform continously rotate
+        elif REPETITIONS <= self.reps <= 2*REPETITIONS:
+            self.widget.rotate(*[convert_combo_str_to_float(var.text()) / REPETITIONS
+                                 for var in rotate_nums])
+
         # If done, stop timer and do non-continuos updates
-        if self.reps >= REPETITIONS:
+        else:
             self.timer.stop()
             self.widget.scale(*[convert_combo_str_to_float(var.text()) for var in scale_nums])
             self.widget.mirror(*[var.isChecked() for var in planes])
             self.updating = False
             self.reps = 0
-
-        # Continous updates
-        else:
-            self.widget.translate(*[convert_combo_str_to_float(var.text()) / REPETITIONS
-                                    for var in translate_nums])
-            self.widget.rotate(*[convert_combo_str_to_float(var.text()) / REPETITIONS
-                                 for var in rotate_nums])
 
     def warning(self, message):
         box = QtWidgets.QMessageBox()
