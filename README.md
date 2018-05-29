@@ -15,4 +15,4 @@ After the GLU libraries being install, install the relevant python packages:
 	```pip3 install -r requirements.txt```
 
 # Running
-```python3 main.py```
+```python3 main_gui.py```
