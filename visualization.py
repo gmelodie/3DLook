@@ -1,17 +1,8 @@
-# TODO: Remove
-# pylint: disable=unused-wildcard-import
-# pylint: disable=wildcard-import
-# pylint: disable=invalid-name
-
-from PyQt5 import QtWidgets, QtCore
+from PyQt5 import QtWidgets
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
-
-
-
-toggleAnimation = True
 
 
 class VisualizationWidget(QtWidgets.QOpenGLWidget):
@@ -44,11 +35,11 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         self.update()
 
     def mirror(self, plane_xy, plane_yz, plane_zx):
-        if (plane_xy):
+        if plane_xy:
             self.scale_z *= -1
-        if (plane_yz):
+        if plane_yz:
             self.scale_x *= -1
-        if (plane_zx):
+        if plane_zx:
             self.scale_y *= -1
         self.update()
 
@@ -72,11 +63,9 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
 
         if self.projection_type == 'Perspectiva':
             glFrustum(-2.0, 2.0, -2.0, 2.0, 2.0, 100.0)
-            gluPerspective(45, 1, 1.7, 20) # TODO: Choose correct values
+            gluPerspective(45, 1, 1.7, 20)
         elif self.projection_type == "Ortogonal":
             glOrtho(-2, 2, -2, 2, -2, 100)
-        else:
-            print("ERROR, not a valid projection")
 
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
@@ -101,6 +90,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         glPopMatrix()
 
     def initializeGL(self):
+        # Definitions
         glClearDepth(1.0)
         glDepthFunc(GL_LESS)
         glEnable(GL_DEPTH_TEST)
@@ -115,7 +105,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
 
         glMatrixMode(GL_MODELVIEW)
 
-        # Define posicao inicial da janela na tela
+        # Defines screen initial pos
         glEnable(GL_DEPTH_TEST)
 
         glutInit()
@@ -123,16 +113,11 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
     def display(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        # Define a matriz de projeção perspective
-        #self.change_projection('Perspectiva')
+        # Define projection matrix
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
 
-        # Define que irá trabalhar com a matriz de modelo/visão
         glMatrixMode(GL_MODELVIEW)
-
-        # Para cada porta de visão, configura as propriedades do
-        # material e desenha o objeto
         glViewport(0, 0, 400, 400)
         glLoadIdentity()
 
@@ -140,9 +125,7 @@ class VisualizationWidget(QtWidgets.QOpenGLWidget):
         # Function for correct integration with PyQt5
         self.makeCurrent()
 
-        # Agora temos que cuidar também o buffer de profundidade.
-        # Trocamos para utilizar dois buffers, deve-se
-        # trocar o glFlush() no método display() para glutSwapBuffers()
+        # Initiation
         glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
 
         # Check depth buffer

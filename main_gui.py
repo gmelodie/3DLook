@@ -87,6 +87,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.reps = 0
 
     def warning(self, message):
+        # Shows a warning box for the user with a button to dismiss
         box = QtWidgets.QMessageBox()
         box.setIcon(QtWidgets.QMessageBox.Question)
         box.setWindowTitle('Atenção!')
