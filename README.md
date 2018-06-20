@@ -1,7 +1,8 @@
 # 3DLook
 A simple, minimalistic 3D visualization tool
 
-[Assignment report on overeleaf](https://www.overleaf.com/16417305bwpkrqzyrqrh#/62977808/)
+[Report 1](https://www.overleaf.com/16417305bwpkrqzyrqrh#/62977808/)
+[Report 2](https://www.overleaf.com/17190944ypzdsvmtqtbm#/65505838/)
 
 # Installation:
 First make sure you have GLU installed. If on Linux:
